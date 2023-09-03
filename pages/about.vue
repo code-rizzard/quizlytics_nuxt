@@ -34,7 +34,7 @@
                 <h4 class="text-onPrimary font-bold text-2xl sm:text-4xl">Join us</h4>
                     
                 <p class="sm:text-lg">Join us in redefining the way we learn, explore, and analyze knowledge. Together, let's unlock the potential of quizzes to illuminate the pathways to understanding.</p>
-                <NuxtLink to="/signup" class="bg-primary-ltr px-4 py-2 text-onBg font-bold text-lg rounded-md text-center sm:self-end self-stretch" >Join Now</NuxtLink>
+                <NuxtLink to="/login" class="bg-primary-ltr px-4 py-2 text-onBg font-bold text-lg rounded-md text-center sm:self-end self-stretch" >Join Now</NuxtLink>
             </div>
         </section>
     </main>
