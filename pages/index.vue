@@ -2,7 +2,7 @@
 <script setup lang="ts">
 
     definePageMeta({
-        middleware: ["auth"]
+        middleware: ["authenticate"]
     })
 
     const user = useSupabaseUser()
