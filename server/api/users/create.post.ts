@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { serverSupabaseUser } from "#supabase/server";
+import prisma from "~/server/utils/prisma";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -10,7 +11,6 @@ export default defineEventHandler(async (event) => {
         error: "User not found",
       };
     }
-    const prisma = new PrismaClient();
     await prisma.user.create({
       data: {
         id: user.id,
@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
     });
     return {
       success: true,
+      error: null,
     };
   } catch (err: any) {
     return {

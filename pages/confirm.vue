@@ -1,15 +1,33 @@
 <script setup lang="ts">
-  const {data: {value}, error} = await useFetch("/api/user/create/post")
-  if(error.value) {
-    console.log("ERROR creating user at dtabase, retrying")
-    await useFetch("/api/user/create/post")
-  }
-  const user = useSupabaseUser()
-  watch([user], () => {
-    if (user.value) {
-      navigateTo('/')
-    }
-  }, {immediate: true,})
+    const user = useSupabaseUser()
+
+    definePageMeta({
+      middleware: [
+        async function(to, from) {
+          const {code} = to.params
+          if(!code) {
+            return navigateTo('/')
+          }
+          const data = await $fetch(`/api/users/${code}`, {retry: 4}) as any
+          if((data as any).success) {
+            return navigateTo('/')
+          }
+        }
+      ]
+    })
+
+
+    watch([user], async () => {
+      async function doSomething() {
+        
+        const val = await $fetch("/api/users/create", {method: "POST"})
+        if (val.success ) {
+          navigateTo('/')
+        }
+      }
+      if(process.server) {return}
+      doSomething()
+    }, {immediate: true,})
 
 </script>
 <template>
