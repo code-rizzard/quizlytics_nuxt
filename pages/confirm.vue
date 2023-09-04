@@ -1,11 +1,8 @@
 <script setup lang="ts">
-const user = useSupabaseUser()
 
-watch(user, () => {
-  if (user.value) {
-    return navigateTo('/')
-  }
-}, { immediate: true })
+  await useFetch("/api/user/create/post")
+  navigateTo('/')
+
 </script>
 <template>
   <div>Waiting for login...</div>

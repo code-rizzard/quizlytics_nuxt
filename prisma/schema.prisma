@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String  @id
+  joinedClasses  Class[] @relation(name: "joinedClasses")
+  createdClasses Class[] @relation(name: "createdClasses")
+  posts          Post[]
+}
+
+model Class {
+  id        String @id @default(uuid())
+  students  User[] @relation(name: "joinedClasses")
+  teacher   User   @relation(fields: [teacherId], references: [id], name: "createdClasses")
+  teacherId String
+  quizzes   Quiz[] @relation(name: "assignedClasses")
+  posts     Post[]
+}
+
+model Post {
+  id       String @id @default(uuid())
+  poster   User   @relation(fields: [posterId], references: [id])
+  posterId String
+  class    Class  @relation(fields: [classId], references: [id])
+  classId  String
+}
+
+model Quiz {
+  id              String  @id @default(uuid())
+  assignedClasses Class[] @relation(name: "assignedClasses")
+}
+
+model Question {
+  id String @id @default(uuid())
+}
