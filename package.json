@@ -16,6 +16,11 @@
     "prisma": "^5.2.0"
   },
   "dependencies": {
-    "@prisma/client": "^5.2.0"
+    "@pinia/nuxt": "^0.4.11",
+    "@prisma/client": "^5.2.0",
+    "pinia": "^2.1.6"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
