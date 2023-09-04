@@ -6,11 +6,11 @@
     })
 
     const user = useSupabaseUser()
-    
 </script>
 
 <template>
     <div>
-        {{user}}
+        <img :src="user.user_metadata.avatar_url" />
+        {{ user.email }}
     </div>
 </template>
