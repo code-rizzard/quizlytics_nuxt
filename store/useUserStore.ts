@@ -10,18 +10,15 @@ export const useUser = defineStore("user", {
   }),
   actions: {
     async initialize() {
-      console.log("INITIALIZING THE USER STORE");
       const user = await useSupabaseUser();
       if (!user.value) {
         console.log("NO USER FOUND");
         return;
       }
-      console.log("SUPABASE USER", user.value);
-      console.log("FETCHING THE USER WITH ID -> ", user.data.user.id);
-      const res = (await $fetch(`/api/users/${user.data.user.id}`)) as any;
-      this.supabase = user.data.user;
-      this.database = res.data.data;
-      console.log("initialized ", this.supabase);
+      const supabaseId = user.value.id;
+      const res = (await $fetch(`/api/users/${supabaseId}`)) as any;
+      this.supabase = user.value;
+      this.database = res.data;
     },
   },
 });
