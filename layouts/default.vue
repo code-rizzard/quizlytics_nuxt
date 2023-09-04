@@ -10,7 +10,6 @@ useHead({
             }
         ]
     })
-
     useUser().initialize()
 </script>
 
