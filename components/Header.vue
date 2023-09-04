@@ -1,3 +1,10 @@
+<script setup>
+    function logout() {
+        useSupabaseClient().auth.signOut()
+    }
+
+</script>
+
 <template>
     <header
     class="w-full h-[10vh] shadow-md"
@@ -10,6 +17,9 @@
               class="text-xl font-extrabold text-primary-dark"
               >Quizlytics</h2>
             </NuxtLink>
+            <button @click="logout">
+                Logout
+            </button>
             <button type="button"
             class="text-primary hover:text-primary-dark sm:hidden"
             >

@@ -4,7 +4,7 @@
     definePageMeta({
       middleware: [
         async function(to, from) {
-          const {code} = to.params
+          const {code} = to.query
           if(!code) {
             return navigateTo('/')
           }
@@ -17,17 +17,14 @@
     })
 
 
-    watch([user], async () => {
-      async function doSomething() {
-        
+    if(process.client) {
         const val = await $fetch("/api/users/create", {method: "POST"})
         if (val.success ) {
           navigateTo('/')
         }
-      }
-      if(process.server) {return}
-      doSomething()
-    }, {immediate: true,})
+    }
+
+
 
 </script>
 <template>
