@@ -6,39 +6,44 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id             String  @id
-  joinedClasses  Class[] @relation(name: "joinedClasses")
-  createdClasses Class[] @relation(name: "createdClasses")
-  posts          Post[]
+  email           String   @unique
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  joinedClasses   Class[]  @relation(name: "joinedClasses", fields: [joinedClassesId], references: [id])
+  joinedClassesId String[] @db.ObjectId
+  createdClasses  Class[]  @relation(name: "createdClasses")
+  posts           Post[]
 }
 
 model Class {
-  id        String @id @default(uuid())
-  students  User[] @relation(name: "joinedClasses")
-  teacher   User   @relation(fields: [teacherId], references: [id], name: "createdClasses")
-  teacherId String
-  quizzes   Quiz[] @relation(name: "assignedClasses")
-  posts     Post[]
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  students   User[]   @relation(name: "joinedClasses", fields: [studentsId], references: [id])
+  studentsId String[] @db.ObjectId
+  teacher    User     @relation(fields: [teacherId], references: [id], name: "createdClasses")
+  teacherId  String   @db.ObjectId
+  quizzes    Quiz[]   @relation(name: "assignedClasses", fields: [quizzesId], references: [id])
+  quizzesId  String[] @db.ObjectId
+  posts      Post[]
 }
 
 model Post {
-  id       String @id @default(uuid())
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   poster   User   @relation(fields: [posterId], references: [id])
-  posterId String
+  posterId String @db.ObjectId
   class    Class  @relation(fields: [classId], references: [id])
-  classId  String
+  classId  String @db.ObjectId
 }
 
 model Quiz {
-  id              String  @id @default(uuid())
-  assignedClasses Class[] @relation(name: "assignedClasses")
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  assignedClasses   Class[]  @relation(name: "assignedClasses", fields: [assignedClassesId], references: [id])
+  assignedClassesId String[] @db.ObjectId
 }
 
 model Question {
-  id String @id @default(uuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
