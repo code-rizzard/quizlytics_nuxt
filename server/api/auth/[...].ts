@@ -1,16 +1,19 @@
 import { NuxtAuthHandler } from "#auth";
 import { Prisma, PrismaClient } from "@prisma/client";
 import GoogleProvider from "next-auth/providers/google";
+
 export default NuxtAuthHandler({
   secret: "2d2b2e2f2g2h2i2j2k2l2m2n2o2p2q2r2s2t2u2v2w2x2y2z",
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GoogleProvider.default({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: useRuntimeConfig().public.providers.google.clientId,
+      clientSecret: useRuntimeConfig().public.providers.google.clientSecret,
     }),
   ],
-
+  pages: {
+    signIn: "/signin",
+  },
   callbacks: {
     async jwt({ token, account, profile }) {
       if (account) {
