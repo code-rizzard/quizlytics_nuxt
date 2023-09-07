@@ -6,9 +6,8 @@ export default NuxtAuthHandler({
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GoogleProvider.default({
-      clientId:
-        "562617134732-no5hs87u868eej6dc2uo1tcvsmejajbj.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
 
