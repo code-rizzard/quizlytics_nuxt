@@ -1,21 +1,16 @@
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useUser } from '~/store/useUserStore';
-
-
     definePageMeta({
-        middleware: ["authenticate"]
+        middleware: [
+            "auth"
+        ]
     })
-
-    const store = useUser()
-
-    const {supabase : user} = storeToRefs(store)
+    const {data} = useAuth()
+    console.log(data.value?.user)
 </script>
 
 <template>
-    <div v-if="user != null">
-        <img :src="user.user_metadata.avatar_url" />
-        {{ user.email }}
+    <div v-if="data?.user">
+        Hello {{ data.user.email }} 
     </div>
 </template>

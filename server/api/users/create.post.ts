@@ -1,29 +1,43 @@
-import { PrismaClient } from "@prisma/client";
-import { serverSupabaseUser } from "#supabase/server";
-import prisma from "~/server/utils/prisma";
-
 export default defineEventHandler(async (event) => {
-  try {
-    const user = await serverSupabaseUser(event);
-    if (!user) {
-      return {
-        success: false,
-        error: "User not found",
-      };
-    }
-    await prisma.user.create({
-      data: {
-        id: user.id,
-      },
-    });
-    return {
-      success: true,
-      error: null,
-    };
-  } catch (err: any) {
+  const { email } = getQuery(event);
+
+  if (email == null) {
     return {
       success: false,
-      error: err.message as string,
+      error: {
+        message: `Email is not supplied. Received: ${email}`,
+      },
+    };
+  }
+
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email: email.toString(),
+      },
+    });
+
+    return {
+      success: true,
+      data: {
+        user,
+      },
+    };
+  } catch (error) {
+    const err = error as any;
+    console.log("ERROR HAPPNEED!", err.name);
+    let returnError = {
+      code: err.code ?? null,
+      message: err.message,
+    };
+    switch (err.code) {
+      case "P2002":
+        returnError.message = "Email already exists.";
+    }
+
+    return {
+      success: false,
+      error: returnError,
     };
   }
 });

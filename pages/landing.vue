@@ -25,7 +25,7 @@
               Fueling your quest for knowledge through interactive exploration and insightful analysis
             </span>
             <NuxtLink
-            to="/login"
+            to="/signin"
             class='button-primary px-6 py-3 rounded-md font-bold text-2xl max-w-sm '
             >Get Started</NuxtLink>
           </div>

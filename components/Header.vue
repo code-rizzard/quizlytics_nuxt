@@ -1,6 +1,6 @@
 <script setup>
     function logout() {
-        useSupabaseClient().auth.signOut()
+        useAuth().signOut()
     }
 
 </script>

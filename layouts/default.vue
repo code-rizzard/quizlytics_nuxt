@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useUser } from '~/store/useUserStore';
 
 useHead({
         title: "Quizlytics",
@@ -10,7 +9,6 @@ useHead({
             }
         ]
     })
-    useUser().initialize()
 </script>
 
 
