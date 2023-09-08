@@ -6,9 +6,6 @@ import { SupportedProviders } from '@sidebase/nuxt-auth/dist/runtime/composables
         ]
     })
     const {signIn, data} = useAuth()
-    watch(data, () => {
-        console.log(data.value)
-    })
     function handleSignin(prov : SupportedProviders) {
         signIn(prov, {callbackUrl: "/signin/confirm"})
     }

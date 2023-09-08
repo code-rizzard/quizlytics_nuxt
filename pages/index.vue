@@ -6,7 +6,6 @@
         ]
     })
     const {data} = useAuth()
-    console.log(data.value?.user)
 </script>
 
 <template>
