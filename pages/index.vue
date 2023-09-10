@@ -5,11 +5,11 @@
             "auth"
         ]
     })
-    const {data} = useAuth()
+    const {userData} = useUserAuth()
 </script>
 
 <template>
-    <div v-if="data?.user">
-        Hello {{ data.user.email }} 
+    <div v-if="userData">
+        Hello {{ userData.user?.id }} 
     </div>
 </template>
