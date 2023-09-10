@@ -1,6 +1,9 @@
 <script setup>
-    function logout() {
-        useAuth().signOut()
+    async function logout() {
+        await useAuth().signOut({
+        redirect: false,
+        });
+        navigateTo("/signin")
     }
 
 </script>
